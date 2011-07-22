@@ -1,0 +1,22 @@
+set number
+set ruler
+set nocompatible
+set softtabstop=2
+set tabstop=2
+set smarttab
+set shiftwidth=2
+set autoindent
+set expandtab
+set backspace=start,indent
+set bs=2
+set nobackup
+set nowritebackup
+set tw=150
+set nohlsearch
+set incsearch
+
+syntax on
+filetype plugin indent on
+
+call pathogen#runtime_append_all_bundles()
+

@@ -1,0 +1,79 @@
+
+
+set number
+set ruler
+set nocompatible
+set softtabstop=2
+set tabstop=2
+set smarttab
+set shiftwidth=2
+set autoindent
+set expandtab
+set backspace=start,indent
+set bs=2
+set nobackup
+set nowritebackup
+set tw=150
+set noantialias
+set guifont=Monaco:h12
+set nohlsearch
+set incsearch
+set lines=60
+set columns=120
+set gtl=%t gtt=%F
+
+syntax on
+" next 2 lines added for coffeescript syntax
+filetype off
+call pathogen#runtime_append_all_bundles()
+
+filetype plugin indent on
+
+let mapleader = ","
+
+let g:fuzzy_ignore = "*.log;vendor/gems/**;*.png;*.jpg"
+let g:fuzzy_matching_limit = 30
+map <leader>t :FuzzyFinderTextMate<CR>
+" - not using anymore - now CMD-T
+
+" let g:fuzzy_matching_limit = 3000
+" let g:CommandTMaxFiles = 500000
+" set wildignore+=*.o,*.obj,.git,vendor/rails/**,vendor/ruby/**,data/**,vendor/cache/**
+" map <leader>t :CommandT<CR>
+
+set wildignore+=assets/products/product_data/**
+
+map <leader>l :NERDTreeFind<CR>
+map <leader>b :FuzzyFinderBuffer<CR>
+map <leader><TAB> :NERDTreeToggle<CR>
+map <leader>f :Ack<space>
+colorscheme blackboard
+
+" Removes trailing spaces
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+:endfunction
+
+autocmd FileWritePre * :call TrimWhiteSpace()
+autocmd FileAppendPre * :call TrimWhiteSpace()
+autocmd FilterWritePre * :call TrimWhiteSpace()
+autocmd BufWritePre * :call TrimWhiteSpace()
+
+autocmd FileType make     set noexpandtab
+autocmd FileType python   set noexpandtab
+
+" Run Ruby unit tests with gT (for all) or gt (only test under
+" cursor) in command mode
+augroup RubyTests
+  au!
+  autocmd BufRead,BufNewFile *_test.rb,test_*.rb
+    \ :nmap gt V:<C-U>!$HOME/.vim/bin/ruby-run-focused-unit-test
+    \ % <C-R>=line("'<")<CR>p <CR>|
+    \ :nmap gT :<C-U>!ruby %<CR>
+augroup END
+
+" added by torsten
+set grepprg=grep\ -rin\ --exclude=*.log\ $*\ /dev/null
+
+
